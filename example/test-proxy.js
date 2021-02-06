@@ -1,10 +1,10 @@
-const { Logger } = require('../index');
+const { LogSession } = require('../index');
 
-const generic = Logger.getLogger();
+const generic = LogSession.getLogger();
 generic.info('log some stuff w/ generic logger');
 
 
-const logger = Logger.getLogger('TEST:PROXY');
+const logger = LogSession.getLogger('TEST:PROXY');
 
 logger.info('start tests');
 logger.debug('loading test 1 from proxy');
@@ -14,4 +14,4 @@ logger.debug('loading test 2 from proxy');
 require('./test2');
 
 
-console.log(Logger);
+console.log(LogSession);

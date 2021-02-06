@@ -1,5 +1,5 @@
-export = Logger;
-declare class Logger {
+export = LogSession;
+declare class LogSession {
     static getLogger(label: string): winston.Logger;
     static logFormatTemplate(i: object): string;
 }

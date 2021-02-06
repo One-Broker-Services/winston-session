@@ -1,5 +1,5 @@
-const Logger = require('./lib/loggerClass');
+const LogSession = require('./lib/LogSession');
 
 module.exports = {
-  Logger,
+  LogSession,
 };
