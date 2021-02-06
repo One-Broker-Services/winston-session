@@ -1,7 +1,7 @@
 {
   "name": "obs-logger",
   "version": "0.0.1",
-  "description": "a winston based custom logger for obs apis",
+  "description": "A custom winston-based logger that allows you to dynamically enrich and maintain a persistent context during the course of a session",
   "main": "index.js",
   "types": "types/index.d.ts",
   "directories": {
