@@ -1,2 +1,2 @@
-export = LogSession;
-import LogSession = require("./lib/LogSession");
+export = SessionLogger;
+import SessionLogger = require("./lib/logger");

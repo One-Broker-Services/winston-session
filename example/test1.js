@@ -1,6 +1,6 @@
-const LogSession = require('../index');
+const SessionLogger = require('../index');
 
-const logger = LogSession.getLogger('TEST:1');
+const logger = SessionLogger.getLogger('TEST:1');
 
 logger.info('into test 1');
 logger.debug('debug message');

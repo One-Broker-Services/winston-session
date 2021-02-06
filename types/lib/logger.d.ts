@@ -1,4 +1,4 @@
-export = LogSession;
+export = SessionLogger;
 /**
  *
  * log structure
@@ -11,10 +11,10 @@ export = LogSession;
  * Nota:
  * -
  */
-declare class LogSession {
-    static getInstance(): any;
-    static addContext(context: any, overwrite?: boolean): typeof LogSession;
-    static getLogger(label?: string): any;
+declare class SessionLogger {
+    static getInstance(): SessionLogger;
+    static addContext(context: any, overwrite?: boolean): typeof SessionLogger;
+    static getLogger(label?: string): winston.Logger;
     static logFormatTemplate(maxlevel?: any): (info: any) => string;
     _level: string;
     _currentLabel: any;
