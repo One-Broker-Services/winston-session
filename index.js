@@ -1,5 +1,3 @@
 const LogSession = require('./lib/LogSession');
 
-module.exports = {
-  LogSession,
-};
+module.exports = LogSession;

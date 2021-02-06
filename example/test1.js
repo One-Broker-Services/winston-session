@@ -1,4 +1,4 @@
-const { LogSession } = require('../index');
+const LogSession = require('../index');
 
 const logger = LogSession.getLogger('TEST:1');
 

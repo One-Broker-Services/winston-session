@@ -1,4 +1,4 @@
-const { LogSession } = require('../index');
+const LogSession = require('../index');
 
 const generic = LogSession
   .addContext({ generic: 'qwrty' })
