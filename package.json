@@ -1,0 +1,23 @@
+{
+  "name": "obs-logger",
+  "version": "0.0.1",
+  "description": "a winston based custom logger for obs apis",
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Estevez",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.1.3",
+    "winston-daily-rotate-file": "^4.5.0"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  }
+}
