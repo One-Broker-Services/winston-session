@@ -1,0 +1,7 @@
+# package directories
+node_modules
+
+# MacOS files
+**/.DS_Store
+
+/logs
