@@ -12,16 +12,17 @@ export = SessionLogger;
  * -
  */
 declare class SessionLogger {
-    static getInstance(): SessionLogger;
-    static addContext(context: any, overwrite?: boolean): typeof SessionLogger;
+    static forceOfflineMode(): typeof SessionLogger;
+    // static _getInstance(): any;
+    static addContext(context: object, overwrite?: boolean): typeof SessionLogger;
     static getLogger(label?: string): winston.Logger;
-    static logFormatTemplate(maxlevel?: any): (info: any) => string;
-    _level: string;
-    _currentLabel: any;
-    _currentLogger: any;
     _context: {
-        loggerId: any;
+        sessionId: string;
     };
+    _level: string;
+    _currentLabel: string;
+    _currentLogger: winston.Logger;
+    _offlineMode: boolean;
     fileTransport: import("winston-daily-rotate-file");
     consoleTransport: winston.transports.ConsoleTransportInstance;
 }
