@@ -1,12 +1,29 @@
 # Description
 
-A custom winston-based logger that allows you to dynamically enrich and maintain a persistent context during the course of a session
+A custom winston-based logger container, with session context management. Context is shared by all active loggers and can be dynamically enriched during the session
+
+## Motivation
+
+## Higligths
+
+* la session es una instancia unica que mantiene sus propiedades persistentes entre todos los ficheros una. Es ideal para los entornos serverless en los que cada llamada a la api es independiente (p.e una lambda unica)
+* permite mantener un contexto compartido por todos los loggers de la session. este contexto se puede ir enriqueciendo durante la sesion en cualquier fu
+* permite matener simultaneamente varios loggers independientes en una misma session.
+Los un logger queda definido  por un label especifico.
 
 ## Installation
 
 ```bash
-npm i @one-broker-services/session-logger
+npm i @one-broker-services/winston-session
 ```
+
+## Enviroment variables
+
+|env|required|description|
+|:--:|:--:|:--:|
+|IS_LOCAL|no|if set Logger run in offline mode|
+|IS_OFFLINE|no|if set Logger run in offline mode|
+|LOG_LEVEL|no|define max log level for Logger|
 
 ## Log Levels
 
@@ -26,7 +43,7 @@ npm i @one-broker-services/session-logger
 ## Use
 
 ```javascript
-const SessionLogger = require('@one-broker-services/session-logger');
+const SessionLogger = require('@one-broker-services/winston-session');
 const logger = SessionLogger.getLogger('TEST:1');
 
 SessionLogger.addContext(somePersistentContext)
@@ -48,7 +65,7 @@ logger.debug('some message', someoOptionalMeta)
 
 ```javascript
 //file1.js
-const SessionLogger = require('@one-broker-services/session-logger');
+const SessionLogger = require('@one-broker-services/winston-session');
 
 const logger = SessionLogger.getLogger('TEST:1');
 
@@ -66,7 +83,7 @@ logger.emerg('emerg message');
 
 ```javascript
 //file2.js
-const SessionLogger = require('@one-broker-services/session-logger');
+const SessionLogger = require('@one-broker-services/winston-session');
 
 const logger = SessionLogger.getLogger('TEST:2');
 
@@ -82,7 +99,7 @@ logger.emerg('emerg message');
 
 ```javascript
 //proxy.js
-const SessionLogger = require('@one-broker-services/session-logger');
+const SessionLogger = require('@one-broker-services/winston-session');
 
 const generic = SessionLogger
   .addContext({ generic: 'any' }
