@@ -12,18 +12,27 @@ export = SessionLogger;
  * -
  */
 declare class SessionLogger {
+    static debug(msg: any, meta: any): void;
+    static info(msg: any, meta: any): void;
+    static verbose(msg: any, meta: any): void;
+    static warning(msg: any, meta: any): void;
+    static error(msg: any, meta: any): void;
+    static crit(msg: any, meta: any): void;
+    static alert(msg: any, meta: any): void;
+    static emerg(msg: any, meta: any): void;
     static forceOfflineMode(): typeof SessionLogger;
-    // static _getInstance(): any;
-    static addContext(context: object, overwrite?: boolean): typeof SessionLogger;
-    static getLogger(label?: string): winston.Logger;
+    static _addLogger(label: any): void;
+    static _getInstance(): any;
+    static addContext(context: any, overwrite?: boolean): typeof SessionLogger;
+    static getLogger(label?: string): any;
     _context: {
-        sessionId: string;
+        sessionId: any;
     };
     _level: string;
-    _currentLabel: string;
-    _currentLogger: winston.Logger;
-    _offlineMode: boolean;
+    _offlineMode: string;
     fileTransport: import("winston-daily-rotate-file");
     consoleTransport: winston.transports.ConsoleTransportInstance;
+    _currentLabel: string;
+    _currentLogger: winston.Logger;
 }
 import winston = require("winston");

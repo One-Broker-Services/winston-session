@@ -1,11 +1,11 @@
-const SessionLogger = require('../index');
+const logger = require('../index');
 
-const logger = SessionLogger.getLogger('TEST:1');
+logger.setLabel('2');
 
 logger.info('into test 1');
 logger.debug('debug message');
-logger.warning('warning message');
+logger.warn('warning message');
 logger.error('error message');
 logger.crit('crit message');
 logger.alert('alert message');
-logger.emerg('emerg message');
+logger.panic('emerg message');

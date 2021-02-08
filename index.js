@@ -1,3 +1,4 @@
-const LogSession = require('./lib/logger');
+// const LogSession = require('./lib/logger');
+const LogService = require('./lib/LogService');
 
-module.exports = LogSession;
+module.exports = LogService.getInstance();
