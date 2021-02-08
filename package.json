@@ -9,7 +9,10 @@
   },
   "scripts": {
     "test": "echo \"Warn: no test specified\" && exit 0",
-    "publish": "np"
+    "publish": "np",
+    "prepublish": "npm run tsc",
+    "publish:local": "local-package-publisher -p",
+    "unpublish:local": "local-package-publisher -u"
   },
   "author": "David Estevez",
   "license": "ISC",

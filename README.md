@@ -36,13 +36,13 @@ npm i @one-broker-services/winston-session
 
 ## Log Levels
 
-Log levels indicates priority, more priority for lower values.
+Log levels indicate priority, more priority for lower values.
 
 ```json
 {
   "panic": 0,
   "alert": 1,
-  "error": 3,
+  "error": 2,
   "footprint": 3,
   "warn": 4,
   "info": 5,
@@ -53,14 +53,14 @@ Log levels indicates priority, more priority for lower values.
 
 ## Transports
 
-For the moment transports are not configurable.
+For now transports are not configurable.
 
 * In `offline` mode the logs go to the console in a cli format (fixed for the moment),
 * In `online` mode the error logs or lower go to a daily rotated file, located in logs folder at the project root
 
 ## Log format
 
-```json
+```javascript
 {
   "timestamp",
   "level",
@@ -92,7 +92,7 @@ logger.trace(msg)
 logger.info(msg)
 logger.warn(msg)
 logger.error(msg,optionalMeta)
-logger.crit(msg,optionalMeta)
+logger.footprint(msg,optionalMeta)
 logger.alert(msg,optionalMeta)
 logger.panic(msg,optionalMeta)
 
