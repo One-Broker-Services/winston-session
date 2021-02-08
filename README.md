@@ -26,31 +26,82 @@ npm i @one-broker-services/winston-session
 
 ## Enviroment variables
 
-|env|required|description|
-|:--:|:--:|:--:|
-|IS_LOCAL|no|if set Logger run in offline mode|
-|IS_OFFLINE|no|if set Logger run in offline mode|
-|LOG_LEVEL|no|define max log level for Logger|
+|env|required|description|default|
+|:--:|:--:|:--:|:--:|
+|`IS_LOCAL`|no|if set, logger run in `offline` mode| `undefined` |
+|`IS_OFFLINE`|no|if set, logger run in `offline` mode| `undefined` |
+|`LOG_LEVEL`|no|define max log level to prompt| `debug` |
+
+> In online mode all logs are in `json` format
 
 ## Log Levels
 
 ```json
 {
-  emerg: 0, //
-  alert: 1,
-  crit: 2,
-  error: 3,
-  warning: 4,
-  info: 5,
-  verbose: 6,
-  debug: 7,
+  "panic": 0,
+  "alert": 1,
+  "crit": 2,
+  "error": 3,
+  "warn": 4,
+  "info": 5,
+  "trace": 6,
+  "debug": 7,
 }
 ```
+
+## Transports
+
+For the moment transports are not configurable.
+
+* In `offline` mode the logs go to the console in a cli format (fixed for the moment),
+* In `online` mode the error logs or lower go to a daily rotated file, located in logs folder at the project root
+
+## Log format
+
+```json
+{
+  "timestamp",
+  "level",
+  "tag", // ${group}:${label}
+  "message",
+  "context": {
+    "sessionId",
+    ...
+  },
+  "data": {
+    ...
+  }
+
+}
+```
+
+## Interface
+
+```javascript
+const logger = require('@one-broker-services/winston-session');
+
+logger.getLogger(): winston.Logger //current winston logger
+logger.setGroup(string): logger // used for tag construction ${group}:${label}
+logger.setLabel(string): logger // used for tag construction ${group}:${label}
+logger.addContext(object): logger // add info to session context. overwrite property if already exists. new context will be present in all logs from now on for the duration of the session
+
+logger.debug(msg,optionalMeta)
+logger.trace(msg)
+logger.info(msg)
+logger.warn(msg)
+logger.error(msg,optionalMeta)
+logger.crit(msg,optionalMeta)
+logger.alert(msg,optionalMeta)
+logger.panic(msg,optionalMeta)
+
+```
+
+> **Notice**: `setGroup`, `setLabel` and `addContext` are chaineable
 
 ## Use
 
 ```javascript
-const SessionLogger = require('@one-broker-services/winston-session');
+const logger = require('@one-broker-services/winston-session');
 const logger = SessionLogger.getLogger('TEST:1');
 
 SessionLogger.addContext(somePersistentContext)

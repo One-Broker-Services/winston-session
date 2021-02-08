@@ -4,7 +4,7 @@ declare class LogService {
     static setLabel(label: string): typeof LogService;
     static setGroup(group: string): typeof LogService;
     static getLogger(): winston.Logger;
-    static addContext(context: any): void;
+    static addContext(context: any): typeof LogService;
     // static _performAction(action: any, msg: any, data: any): void;
     static debug(msg: string, meta: object): void;
     static trace(msg: string, meta: object): void;
