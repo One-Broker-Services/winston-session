@@ -1,6 +1,6 @@
 {
   "name": "@one-broker-services/winston-session",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A custom winston-based logger container, with session context management",
   "main": "index.js",
   "types": "types/index.d.ts",
