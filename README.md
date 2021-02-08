@@ -102,19 +102,23 @@ logger.panic(msg,optionalMeta)
 
 ```javascript
 const logger = require('@one-broker-services/winston-session');
-const logger = SessionLogger.getLogger('TEST:1');
 
-SessionLogger.addContext(somePersistentContext)
+logger
+  .setGroup('TEST')
+  .setLabel('BASIC')
+  .addContext(somePersistentContext);
 
-logger.emerg('some message', someoOptionalMeta)
+
+logger.panic('some message', someoOptionalMeta)
 logger.alert('some message', someoOptionalMeta)
 logger.crit('some message', someoOptionalMeta)
 
-SessionLogger.addContext(morePersistentContext)
+// maybe in another file
+logger.addContext(morePersistentContext) 
 
 logger.error('some message', someoOptionalMeta)
-logger.warning('some message', someoOptionalMeta)
-logger.info('some message', someoOptionalMeta)
+logger.warn('some message')
+logger.info('some message')
 logger.debug('some message', someoOptionalMeta)
 
 ```
