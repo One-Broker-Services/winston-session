@@ -36,12 +36,14 @@ npm i @one-broker-services/winston-session
 
 ## Log Levels
 
+Log levels indicates priority, more priority for lower values.
+
 ```json
 {
   "panic": 0,
   "alert": 1,
-  "crit": 2,
   "error": 3,
+  "footprint": 3,
   "warn": 4,
   "info": 5,
   "trace": 6,
@@ -111,7 +113,7 @@ logger
 
 logger.panic('some message', someoOptionalMeta)
 logger.alert('some message', someoOptionalMeta)
-logger.crit('some message', someoOptionalMeta)
+logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 
 // maybe in another file
 logger.addContext(morePersistentContext) 
@@ -136,7 +138,7 @@ logger.trace('into test 1');
 logger.info('into test 1');
 logger.warn('warning message');
 logger.error('error message', { error: 'ERROR HERE' });
-logger.crit('crit message');
+logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 logger.alert('alert message');
 logger.panic('emerg message');
 
@@ -153,7 +155,7 @@ logger.info('into test 1');
 logger.debug('debug message');
 logger.warn('warning message');
 logger.error('error message');
-logger.crit('crit message');
+logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 logger.alert('alert message');
 logger.panic('emerg message');
 
