@@ -1,17 +1,39 @@
 # Description
 
-A custom winston-based logger container, with session context management. Context is shared by all active loggers and can be dynamically enriched during the session
+A simple contextual logging system for [`winston`](<https://www.npmjs.com/package/winston>), with [Mapped Diagnostic Context](<https://logback.qos.ch/manual/mdc.html>)   support
 
-# Disclaimer
-
-This is a work in progress, current versions are still unstable, so breaking changes may come in the near future
-
+> **Disclaimer**
+This is a work in progress, current versions are still unstable, so breaking changes may come in the near future.
 Any comment, suggestions or contributions are welcome.
 <destevezbreso@gmail.com>
 
 ## Motivation
 
+Logs are often generated independently of each other, and while they may share certain information, their main purpose is to provide specific information for a given situation. This makes it difficult to explore more details about the event, such as the cause, previous actions, or even additional details surrounding the event itself.
+
+Contextual logging is an approach that encourages not only adding additional useful data to log events, but also sharing that data between related events.
+
+<!-- Con el registro contextual, los tokens de datos se agregan y eliminan de los eventos de registro durante el transcurso del tiempo de ejecución de la aplicación.
+Según el flujo de trabajo de su aplicación, algunos de estos tokens se pueden compartir en varios eventos de registro o incluso en toda la aplicación. Mientras tanto, sus eventos de registro aún conservan información de registro principal, como nombres de métodos y seguimientos de pila. -->
+
+<!-- winston es una popular herramienta de logging para javascript
+Con winston, si bien es posible para cada evento registrar los datos necesarios manualmente en el momento del log como metadatos, -->
+
+### How is `winston-logger` useful?
+
+`winston-logger` allows you to enrich your logs with additional data without having to add it each time on each log call (or modify the code already written in a multitude of places). Additionally, it makes it easy for you to map log events based on a common data point, such as a unique identifier, username, or endpoint.
+<!-- Puede agregar y eliminar del contexto durante el transcurso de la aplicación sin tener que realizar un seguimiento de lo que se almacena en el contexto y dónde aparece en sus registros. -->
+
 ## Higligths
+
+* One session (w/ a global context) and multiple session segments (w/ local context each)
+* dynamicaly generated segment tag act as namespace for logs and local context
+* provide a simplified interface that focuses on what to log over how to log (but you still have some level of control over `winston` )
+* simplify **structured logging** approaches
+
+> **Tip**: With namespaces, you can also create your own namespace dictionary, which allows you to define which namespace patterns you want and reject any calls to logs that don’t conform to your namespace dictionary patterns. That makes it much easier to enforce clean logging standards throughout your application.
+
+<!-- * a `winston` logger can be particular for ona segment or can be shared for all segments (you decide) -->
 
 <!-- * la session es una instancia unica que mantiene sus propiedades persistentes entre todos los ficheros una. Es ideal para los entornos serverless en los que cada llamada a la api es independiente (p.e una lambda unica)
 * permite mantener un contexto compartido por todos los loggers de la session. este contexto se puede ir enriqueciendo durante la sesion en cualquier fu
