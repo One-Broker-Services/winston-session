@@ -4,8 +4,7 @@ A simple contextual logging system for [`winston`](<https://www.npmjs.com/packag
 
 > **Disclaimer**
 This is a work in progress, current versions are still unstable, so breaking changes may come in the near future.
-Any comment, suggestions or contributions are welcome.
-<destevezbreso@gmail.com>
+Any comments, suggestions or contributions [are welcome](<https://github.com/One-Broker-Services/winston-session/issues>)
 
 ## Motivation
 
@@ -214,3 +213,4 @@ logger.info('proxy finish');
 ```
 
 <!--similar: https://www.npmjs.com/package/@zebpay/colt -->
+<!-- https://www.npmjs.com/package/winston-context -->
