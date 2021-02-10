@@ -18,6 +18,8 @@ Según el flujo de trabajo de su aplicación, algunos de estos tokens se pueden 
 
 <!-- winston es una popular herramienta de logging para javascript
 Con winston, si bien es posible para cada evento registrar los datos necesarios manualmente en el momento del log como metadatos, -->
+<!-- 
+Often when there are lot of microservices and logs are been forwarded it becomes difficult to find the reason for error and sequence of events that might have caused the error. MDC approach helps to group together the events that are related to specific event for eg. Order Checkout failed or Payment Failure on Ecommerce site.As customer is unaware of the internal things it is wise idea to add some related information as correlationIds like { orderID: 101 } so it can be searched quickly. -->
 
 ### How is `winston-logger` useful?
 
@@ -102,7 +104,8 @@ For now transports are not configurable.
 ## Interface
 
 ```javascript
-const logger = require('@one-broker-services/winston-session');
+const LogSession = require('@one-broker-services/winston-session');
+const logger = new LogSession();
 
 logger.getLogger(): winston.Logger //current winston logger
 logger.setGroup(string): logger // used for tag construction ${group}:${label}
@@ -151,7 +154,8 @@ logger.debug('some message', someoOptionalMeta)
 
 ```javascript
 //file1.js
-const logger = require('@one-broker-services/winston-session');
+const LogSession = require('@one-broker-services/winston-session');
+const logger = new LogSession();
 
 logger.setLabel('1');
 
@@ -169,7 +173,8 @@ logger.panic('emerg message');
 
 ```javascript
 //file2.js
-const logger = require('@one-broker-services/winston-session');
+const LogSession = require('@one-broker-services/winston-session');
+const logger = new LogSession();
 
 logger.setLabel('2');
 
@@ -185,7 +190,8 @@ logger.panic('emerg message');
 
 ```javascript
 //proxy.js
-const logger = require('@one-broker-services/winston-session');
+const LogSession = require('@one-broker-services/winston-session');
+const logger = new LogSession();
 
 logger.info('log some stuff w/ generic logger');
 logger.addContext({ generic: 'qwrty' });
@@ -202,4 +208,9 @@ logger.debug('add context for test2');
 logger.addContext({ level2Time: 'level2Time' });
 logger.debug('loading test 2 from proxy');
 require('./test2');
+
+
+logger.info('proxy finish');
 ```
+
+<!--similar: https://www.npmjs.com/package/@zebpay/colt -->
