@@ -1,4 +1,6 @@
-const logger = require('../index');
+const LogSession = require('../index');
+
+const logger = new LogSession();
 
 logger.info('log some stuff w/ generic logger');
 logger.addContext({ generic: 'qwrty' });
@@ -15,3 +17,6 @@ logger.debug('add context for test2');
 logger.addContext({ level2Time: 'level2Time' });
 logger.debug('loading test 2 from proxy');
 require('./test2');
+
+
+logger.info('proxy finish');

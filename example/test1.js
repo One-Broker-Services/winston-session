@@ -1,5 +1,6 @@
-const logger = require('../index');
+const LogSession = require('../index');
 
+const logger = new LogSession();
 logger.setLabel('1');
 
 logger.debug('debug message');
