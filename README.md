@@ -56,8 +56,6 @@ npm i @one-broker-services/winston-session
 |`LOG_LEVEL`|no|define max log level to prompt| `debug` |
 |`LOG_CTX_LEVEL`|no|define max log level to attach context| `debug` |
 
-> In online mode all logs are in `json` format
-
 ## Log Levels
 
 Log levels indicate priority, more priority for lower values.
@@ -79,8 +77,11 @@ Log levels indicate priority, more priority for lower values.
 
 For now transports are not configurable.
 
-* In `offline` mode the logs go to the console in a cli format (fixed for the moment),
-* In `online` mode the error logs or lower go to a daily rotated file, located in logs folder at the project root
+* In `offline` mode:
+  * logs go to the console in a cli format (fixed for the moment)
+  * error logs or lower go to a daily rotated file, located in logs folder at project root
+* In `online` mode:
+  * logs go to the console in uncolorized json format
 
 ## Log format
 
