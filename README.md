@@ -111,8 +111,8 @@ const logger = new LogSession();
 
 logger.getLogger(): winston.Logger //current winston logger
 logger.setGroup(string): logger // used for tag construction ${group}:${label}
-logger.setLabel(string): logger // used for tag construction ${group}:${label}
-logger.addContext(object): logger // add info to session context. overwrite property if already exists. new context will be present in all logs from now on for the duration of the session
+logger.mdc.put(object):  // put info to session context. overwrite property if already exists. new context will be present in all logs from now on session timeline
+logger.mdcSegment.put(object):  // put info into current segment context scope. overwrite property if already exists. new context will be present in all logs in te current segment scope
 
 logger.debug(msg,optionalMeta)
 logger.trace(msg)
@@ -125,7 +125,7 @@ logger.panic(msg,optionalMeta)
 
 ```
 
-> **Notice**: `setGroup`, `startSegment` and `addContext` are chaineable
+> **Notice**: `setGroup`, `startSegment` and are chaineable
 
 ## Use
 
@@ -133,17 +133,22 @@ logger.panic(msg,optionalMeta)
 const logger = require('@one-broker-services/winston-session');
 
 const logger = new LogSession();
-logger
-.startSegment('TEST');
-.addContext(somePersistentContext);
-.addContextSegment(morePersistentContext); // ... but only for current segment
+logger.startSegment('TEST');
+
+logger.mdc.put(somePersistentContext);
+
+// ...
+
+logger.mdcSegment.put(morePersistentContext); // ... but only for current segment
+
+// ...
 
 logger.panic('some message', someoOptionalMeta)
 logger.alert('some message', someoOptionalMeta)
 logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 
 // maybe in another file
-logger.addContext(morePersistentContext) // visible for all logs from now in the timeline
+logger.mdc.put(morePersistentContext) // visible for all logs from now in the timeline
 
 logger.error('some message', someoOptionalMeta)
 logger.warn('some message')
@@ -201,21 +206,21 @@ logger.info('hello im now in entry point');
 
 logger.startGroup('AUTH');
 logger.debug('add local context');
-logger.addContextSegment({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
+logger.mdcSegment.put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
 logger.info('try to autenticate user');
-logger.addContext({ endpoint: '/example', username: 'user', role: 'admin' });
+logger.mdc.put({ endpoint: '/example', username: 'user', role: 'admin' });
 logger.info('auth success');
 
 logger.startGroup('LOAD_ROUTES');
 
 logger.info('loading...');
 logger.debug('add local context');
-logger.addContextSegment({ level1Time: 'level1Time' });
+logger.mdcSegment.put({ level1Time: 'level1Time' });
 logger.debug('loading test 1 from proxy');
 require('./test1');
 
 logger.debug('add context for test2');
-logger.addContextSegment({ level2Time: 'level2Time' });
+logger.mdcSegment.put({ level2Time: 'level2Time' });
 logger.debug('loading test 2 from proxy');
 require('./test2');
 
