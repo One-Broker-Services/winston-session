@@ -1,19 +1,27 @@
 export = LogSession;
+
 declare class LogSessionOptions {
     name: string;
 }
+
 declare class LogSession {
-    constructor(opt: LogSessionOptions);
+    constructor(opt?: LogSessionOptions);
     _name: string;
-    _segment: string;
+    _mdcLevel: string;
+    _segment: any;
     _loggerId: string;
     _group: string;
     _label: string;
     _level: string;
     _mdc: MDCManager;
     _service: ServiceManager;
-    _contextLevel: string
     _logger: winston.Logger;
+    get mdc(): {
+        segment: () => {
+            put: (ctx: any) => void;
+        };
+        put: (ctx: any) => void;
+    };
     getLogger(): winston.Logger;
     startSegment(segment: string): LogSession;
     endSegment(): void;

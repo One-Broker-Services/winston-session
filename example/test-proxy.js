@@ -10,6 +10,8 @@ logger.info('hello im now in entry point');
 
 logger.startGroup('AUTH');
 logger.debug('add local context');
+logger.mdc.segment().put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
+
 logger.addContextSegment({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
 logger.info('try to autenticate user');
 logger.addContext({ endpoint: '/example', username: 'user', role: 'admin' });
