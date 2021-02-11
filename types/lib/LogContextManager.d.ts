@@ -1,22 +1,23 @@
 export = ContextManager;
 declare class ContextManager {
-    _getGlobal(): any;
-    _getLocal(id?: any): any;
-    _resetLocal(id: any): void;
-    _reset(): void;
     _context: any;
-    _updateGlobal(data: any): void;
-    _updateLocal(data: any, id: any): void;
+    _getGlobal(): any;
+    _getLocal(id?: string): any;
+    _resetLocal(id: string): void;
+    _reset(): void;
+    _updateGlobal(data: object): void;
+    _updateLocal(data: object, id: string): void;
+    get id(): string;
     get(id: any): {
-        global: any;
-        local: any;
+        global: object;
+        local: object;
     };
-    reset(id: any): {
-        global: any;
-        local: any;
+    reset(id: string): {
+        global: object;
+        local: object;
     };
-    update(data: any, id: any): {
-        global: any;
-        local: any;
+    update(data: object, id: string): {
+        global: object;
+        local: object;
     };
 }

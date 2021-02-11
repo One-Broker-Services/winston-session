@@ -1,5 +1,8 @@
 export = LogContext;
 declare class LogContext {
     static instance(): any;
-    global: {};
+    static reset(): void;
+    global: {
+        _globalContextId: string;
+    };
 }

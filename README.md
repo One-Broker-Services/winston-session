@@ -1,6 +1,6 @@
 # Description
 
-A simple contextual logging system for [`winston`](<https://www.npmjs.com/package/winston>), with [Mapped Diagnostic Context](<https://logback.qos.ch/manual/mdc.html>)   support
+A simple contextual logging system for [`winston`](<https://www.npmjs.com/package/winston>), inspired in [Mapped Diagnostic Context](<https://logback.qos.ch/manual/mdc.html>)
 
 > **Disclaimer**
 This is a work in progress, current versions are still unstable, so breaking changes may come in the near future.
@@ -85,20 +85,22 @@ For now transports are not configurable.
 
 ```javascript
 {
-  "timestamp",
-  "level",
-  "tag", // ${group}:${label}
-  "message",
-  "context": {
-    "sessionId",
+  "_timestamp",
+  "_segmentId", // ${group}:${label}
+  "_context": {
+    "_id",
     ...
   },
-  "data": {
+  "_meta": {
     ...
   }
-
+  "message",
+  "level",
+  "label",
 }
 ```
+
+### Example
 
 ## Interface
 
@@ -155,8 +157,7 @@ logger.debug('some message', someoOptionalMeta)
 //file1.js
 const LogSession = require('@one-broker-services/winston-session');
 const logger = new LogSession();
-
-logger.setLabel('1');
+logger.startSegment('TEST1');
 
 logger.debug('debug message');
 logger.trace('into test 1');
@@ -167,49 +168,58 @@ logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 logger.alert('alert message');
 logger.panic('emerg message');
 
-
 ```
 
 ```javascript
 //file2.js
-const LogSession = require('@one-broker-services/winston-session');
 const logger = new LogSession();
-
-logger.setLabel('2');
+logger.startSegment('TEST1');
 
 logger.info('into test 1');
 logger.debug('debug message');
 logger.warn('warning message');
 logger.error('error message');
-logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 logger.alert('alert message');
 logger.panic('emerg message');
+
+logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 
 ```
 
 ```javascript
 //proxy.js
 const LogSession = require('@one-broker-services/winston-session');
+
 const logger = new LogSession();
 
-logger.info('log some stuff w/ generic logger');
-logger.addContext({ generic: 'qwrty' });
-logger.info('log some stuff w/ generic logger');
-logger.setGroup('TEST').setLabel('PROXY');
+logger.info('log some stuff in generic segment');
 
-logger.info('start tests');
-logger.debug('add context for test1');
-logger.addContext({ level1Time: 'level1Time' });
+logger.startSegment('ENTRY_POINT');
+
+logger.info('hello im now in entry point');
+
+logger.startGroup('AUTH');
+logger.debug('add local context');
+logger.addContextSegment({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
+logger.info('try to autenticate user');
+logger.addContext({ endpoint: '/example', username: 'user', role: 'admin' });
+logger.info('auth success');
+
+logger.startGroup('LOAD_ROUTES');
+
+logger.info('loading...');
+logger.debug('add local context');
+logger.addContextSegment({ level1Time: 'level1Time' });
 logger.debug('loading test 1 from proxy');
 require('./test1');
 
 logger.debug('add context for test2');
-logger.addContext({ level2Time: 'level2Time' });
+logger.addContextSegment({ level2Time: 'level2Time' });
 logger.debug('loading test 2 from proxy');
 require('./test2');
 
-
 logger.info('proxy finish');
+
 ```
 
 <!--similar: https://www.npmjs.com/package/@zebpay/colt -->

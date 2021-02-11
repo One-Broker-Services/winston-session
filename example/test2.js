@@ -1,7 +1,7 @@
 const LogSession = require('../index');
 
 const logger = new LogSession();
-logger.setLabel('2');
+logger.startSegment('TEST1');
 
 logger.info('into test 1');
 logger.debug('debug message');
