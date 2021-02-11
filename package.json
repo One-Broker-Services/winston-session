@@ -1,6 +1,6 @@
 {
   "name": "@one-broker-services/winston-session",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple contextual logging system for winston, with Mapped Diagnostic Context support",
   "main": "index.js",
   "types": "types/index.d.ts",
