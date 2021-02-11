@@ -79,7 +79,7 @@ For now transports are not configurable.
 
 * In `offline` mode:
   * logs go to the console in a cli format (fixed for the moment)
-  * error logs or lower go to a daily rotated file, located in logs folder at project root
+  <!-- * error logs or lower go to a daily rotated file, located in logs folder at project root -->
 * In `online` mode:
   * logs go to the console in uncolorized json format
 
