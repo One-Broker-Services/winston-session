@@ -4,7 +4,6 @@ logger.debug('qwertyu');
 logger.trace('qwertyu');
 logger.info('qwertyu');
 
-logger.setLabel('RED_ZONE');
 logger.addContext({ a: '111111111111' });
 
 logger.warn('qwertyu');

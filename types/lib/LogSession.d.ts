@@ -15,7 +15,6 @@ declare class LogSession {
     _contextLevel: string
     _logger: winston.Logger;
     getLogger(): winston.Logger;
-    setLabel(label: string): LogSession;
     startSegment(segment: string): LogSession;
     endSegment(): void;
     startGroup(group: string): LogSession;

@@ -125,25 +125,25 @@ logger.panic(msg,optionalMeta)
 
 ```
 
-> **Notice**: `setGroup`, `setLabel` and `addContext` are chaineable
+> **Notice**: `setGroup`, `startSegment` and `addContext` are chaineable
 
 ## Use
 
 ```javascript
 const logger = require('@one-broker-services/winston-session');
 
+const logger = new LogSession();
 logger
-  .setGroup('TEST')
-  .setLabel('BASIC')
-  .addContext(somePersistentContext);
-
+.startSegment('TEST');
+.addContext(somePersistentContext);
+.addContextSegment(morePersistentContext); // ... but only for current segment
 
 logger.panic('some message', someoOptionalMeta)
 logger.alert('some message', someoOptionalMeta)
 logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
 
 // maybe in another file
-logger.addContext(morePersistentContext) 
+logger.addContext(morePersistentContext) // visible for all logs from now in the timeline
 
 logger.error('some message', someoOptionalMeta)
 logger.warn('some message')
