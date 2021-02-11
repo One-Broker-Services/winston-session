@@ -54,6 +54,7 @@ npm i @one-broker-services/winston-session
 |`IS_LOCAL`|no|if set, logger run in `offline` mode| `undefined` |
 |`IS_OFFLINE`|no|if set, logger run in `offline` mode| `undefined` |
 |`LOG_LEVEL`|no|define max log level to prompt| `debug` |
+|`LOG_CTX_LEVEL`|no|define max log level to attach context| `debug` |
 
 > In online mode all logs are in `json` format
 

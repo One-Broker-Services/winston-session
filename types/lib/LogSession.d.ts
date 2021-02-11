@@ -1,6 +1,9 @@
 export = LogSession;
+declare class LogSessionOptions {
+    name: string;
+}
 declare class LogSession {
-    constructor(sessionName: string);
+    constructor(opt: LogSessionOptions);
     _name: string;
     _segment: string;
     _loggerId: string;
@@ -9,6 +12,7 @@ declare class LogSession {
     _level: string;
     _context: ContextManager;
     _service: ServiceManager;
+    _contextLevel: string
     _logger: winston.Logger;
     getLogger(): winston.Logger;
     setLabel(label: string): LogSession;
