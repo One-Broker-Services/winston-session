@@ -35,7 +35,7 @@ declare class LogSession {
     error(msg: string, meta: object): void;
     alert(msg: string, meta: object): void;
     panic(msg: string, meta: object): void;
-    footprint(msg: string, meta: object): void;
+    backup(msg: string, meta: object): void;
 }
 import winston = require("winston");
 import MDCManager = require("./MDCManager");
