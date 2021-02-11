@@ -1,34 +1,49 @@
+const winston = require('winston');
 const LogSession = require('../index');
 
-const logger = new LogSession();
+const loggerOptions = {
+  level: 'debug',
+  transports: [new winston.transports.Console({
+    handleExceptions: true,
+    level: 'error',
+    format: winston.format.combine(
+      winston.format.colorize(), // winston.format.cli(),
+      winston.format.printf((info) => `${info.level} ${info.message}`),
+    ),
+  })],
+};
 
-logger.info('log some stuff in generic segment');
+const logSession = new LogSession();
 
-logger.startSegment('ENTRY_POINT');
+logSession.globalConfig(loggerOptions);
 
-logger.info('hello im now in entry point');
+logSession.info('log some stuff in generic segment');
 
-logger.startGroup('AUTH');
-logger.debug('add local context');
-logger.mdcSegment.put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
+logSession.startSegment('ENTRY_POINT');
+
+logSession.info('hello im now in entry point');
+
+logSession.startGroup('AUTH');
+logSession.debug('add local context');
+logSession.mdcSegment.put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
 
 // .....
 
-logger.info('try to autenticate user');
-logger.mdc.put({ endpoint: '/example', username: 'user', role: 'admin' });
-logger.info('auth success');
+logSession.info('try to autenticate user');
+logSession.mdc.put({ endpoint: '/example', username: 'user', role: 'admin' });
+logSession.info('auth success');
 
-logger.startGroup('LOAD_ROUTES');
+logSession.startGroup('LOAD_ROUTES');
 
-logger.info('loading...');
-logger.debug('add local context');
-logger.mdcSegment.put({ level1Time: 'level1Time' });
-logger.debug('loading test 1 from proxy');
+logSession.info('loading...');
+logSession.debug('add local context');
+logSession.mdcSegment.put({ level1Time: 'level1Time' });
+logSession.debug('loading test 1 from proxy');
 require('./test1');
 
-logger.debug('add context for test2');
-logger.mdcSegment.put({ level2Time: 'level2Time' });
-logger.debug('loading test 2 from proxy');
+logSession.debug('add context for test2');
+logSession.mdcSegment.put({ level2Time: 'level2Time' });
+logSession.debug('loading test 2 from proxy');
 require('./test2');
 
-logger.info('proxy finish');
+logSession.info('proxy finish');

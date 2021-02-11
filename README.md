@@ -75,13 +75,15 @@ Log levels indicate priority, more priority for lower values.
 
 ## Transports
 
-For now transports are not configurable.
+Logger transports are configurable through `globalConfig` method.
 
-* In `offline` mode:
+* default: console, level `debug` and `json` format
+
+<!-- *In `offline` mode:
   * logs go to the console in a cli format (fixed for the moment)
   <!-- * error logs or lower go to a daily rotated file, located in logs folder at project root -->
 * In `online` mode:
-  * logs go to the console in uncolorized json format
+  * logs go to the console in uncolorized json format -->
 
 ## Log format
 
@@ -109,7 +111,7 @@ For now transports are not configurable.
 ```javascript
 const LogSession = require('@one-broker-services/winston-session');
 const logger = new LogSession();
-
+globalConfig(winston.LoggerOptions) // configure global logger for all sessions and segments in app timeline
 logger.getLogger(): winston.Logger //current winston logger
 logger.setGroup(string): logger // used for tag construction ${group}:${label}
 logger.mdc.put(object):  // put info to session context. overwrite property if already exists. new context will be present in all logs from now on session timeline
@@ -134,6 +136,8 @@ logger.panic(msg,optionalMeta)
 const logger = require('@one-broker-services/winston-session');
 
 const logger = new LogSession();
+logSession.globalConfig(winston.LoggerOptions);
+
 logger.startSegment('TEST');
 
 logger.mdc.put(somePersistentContext);
@@ -163,33 +167,37 @@ logger.debug('some message', someoOptionalMeta)
 ```javascript
 //file1.js
 const LogSession = require('@one-broker-services/winston-session');
-const logger = new LogSession();
-logger.startSegment('TEST1');
 
-logger.debug('debug message');
-logger.trace('into test 1');
-logger.info('into test 1');
-logger.warn('warning message');
-logger.error('error message', { error: 'ERROR HERE' });
-logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
-logger.alert('alert message');
-logger.panic('emerg message');
+const logSession = new LogSession();
+logSession.startSegment('TEST1');
+
+logSession.debug('debug message');
+logSession.trace('into test 1');
+logSession.info('into test 1');
+logSession.warn('warning message');
+logSession.error('error message', { error: 'ERROR HERE' });
+logSession.backup('some important checkpoint data', { data: { a: 'qwert' } });
+logSession.alert('alert message');
+logSession.panic('emerg message');
+
 
 ```
 
 ```javascript
 //file2.js
-const logger = new LogSession();
-logger.startSegment('TEST1');
+const LogSession = require('@one-broker-services/winston-session');
 
-logger.info('into test 1');
-logger.debug('debug message');
-logger.warn('warning message');
-logger.error('error message');
-logger.alert('alert message');
-logger.panic('emerg message');
+const logSession = new LogSession();
+logSession.startSegment('TEST1');
 
-logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
+logSession.info('into test 1');
+logSession.debug('debug message');
+logSession.warn('warning message');
+logSession.error('error message');
+logSession.alert('alert message');
+logSession.panic('emerg message');
+
+logSession.backup('some important checkpoint data', { data: { a: 'qwert' } });
 
 ```
 
@@ -197,35 +205,56 @@ logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
 //proxy.js
 const LogSession = require('@one-broker-services/winston-session');
 
-const logger = new LogSession();
+const winston = require('winston');
 
-logger.info('log some stuff in generic segment');
+const loggerOptions = {
+  level: 'debug',
+  transports: [new winston.transports.Console({
+    handleExceptions: true,
+    level: 'error',
+    format: winston.format.combine(
+      winston.format.colorize(), // winston.format.cli(),
+      winston.format.printf((info) => `${info.level} ${info.message}`),
+    ),
+  })],
+};
 
-logger.startSegment('ENTRY_POINT');
+const logSession = new LogSession();
 
-logger.info('hello im now in entry point');
+// You can optionaly configure a global logger for all sessions and segments used in app timeline
+logSession.globalConfig(loggerOptions);
 
-logger.startGroup('AUTH');
-logger.debug('add local context');
-logger.mdcSegment.put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
-logger.info('try to autenticate user');
-logger.mdc.put({ endpoint: '/example', username: 'user', role: 'admin' });
-logger.info('auth success');
+logSession.info('log some stuff in generic segment');
 
-logger.startGroup('LOAD_ROUTES');
+logSession.startSegment('ENTRY_POINT');
 
-logger.info('loading...');
-logger.debug('add local context');
-logger.mdcSegment.put({ level1Time: 'level1Time' });
-logger.debug('loading test 1 from proxy');
+logSession.info('hello im now in entry point');
+
+logSession.startGroup('AUTH');
+logSession.debug('add local context');
+logSession.mdcSegment.put({ authInfo: 'this is a local context info for session: ENTRY_POINT:AUTH' });
+
+// .....
+
+logSession.info('try to autenticate user');
+logSession.mdc.put({ endpoint: '/example', username: 'user', role: 'admin' });
+logSession.info('auth success');
+
+logSession.startGroup('LOAD_ROUTES');
+
+logSession.info('loading...');
+logSession.debug('add local context');
+logSession.mdcSegment.put({ level1Time: 'level1Time' });
+logSession.debug('loading test 1 from proxy');
 require('./test1');
 
-logger.debug('add context for test2');
-logger.mdcSegment.put({ level2Time: 'level2Time' });
-logger.debug('loading test 2 from proxy');
+logSession.debug('add context for test2');
+logSession.mdcSegment.put({ level2Time: 'level2Time' });
+logSession.debug('loading test 2 from proxy');
 require('./test2');
 
-logger.info('proxy finish');
+logSession.info('proxy finish');
+
 
 ```
 

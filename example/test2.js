@@ -1,13 +1,13 @@
 const LogSession = require('../index');
 
-const logger = new LogSession();
-logger.startSegment('TEST1');
+const logSession = new LogSession();
+logSession.startSegment('TEST1');
 
-logger.info('into test 1');
-logger.debug('debug message');
-logger.warn('warning message');
-logger.error('error message');
-logger.alert('alert message');
-logger.panic('emerg message');
+logSession.info('into test 1');
+logSession.debug('debug message');
+logSession.warn('warning message');
+logSession.error('error message');
+logSession.alert('alert message');
+logSession.panic('emerg message');
 
-logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
+logSession.backup('some important checkpoint data', { data: { a: 'qwert' } });

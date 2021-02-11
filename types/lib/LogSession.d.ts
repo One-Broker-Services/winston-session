@@ -6,22 +6,13 @@ declare class LogSessionOptions {
 
 declare class LogSession {
     constructor(opt?: LogSessionOptions);
-    _name: string;
-    _mdcLevel: string;
-    _segment: any;
-    _loggerId: string;
-    _group: string;
-    _label: string;
-    _level: string;
-    _mdc: MDCManager;
-    _service: ServiceManager;
-    _logger: winston.Logger;
     get mdc(): {
-        put: (ctx: any) => void;
+        put: (ctx: object) => void;
     };
     get mdcSegment(): {
-        put: (ctx: any) => void;
+        put: (ctx: object) => void;
     };
+    globalConfig(options: winston.LoggerOptions): void;
     getLogger(): winston.Logger;
     startSegment(segment: string): LogSession;
     endSegment(): void;
@@ -39,4 +30,5 @@ declare class LogSession {
 }
 import winston = require("winston");
 import MDCManager = require("./MDCManager");
-import ServiceManager = require("./LogServiceManager");
+import ServiceManager = require("./LogServiceManager");import winston = require("winston/lib/winston/config");
+
