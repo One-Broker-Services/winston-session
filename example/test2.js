@@ -10,4 +10,4 @@ logger.error('error message');
 logger.alert('alert message');
 logger.panic('emerg message');
 
-logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
+logger.backup('some important checkpoint data', { data: { a: 'qwert' } });

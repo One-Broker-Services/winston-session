@@ -62,10 +62,10 @@ Log levels indicate priority, more priority for lower values.
 
 ```json
 {
-  "panic": 0,
-  "alert": 1,
-  "error": 2,
-  "footprint": 3,
+  "backup": 0,
+  "panic": 1,
+  "alert": 2,
+  "error": 3,
   "warn": 4,
   "info": 5,
   "trace": 6,
@@ -120,7 +120,7 @@ logger.trace(msg)
 logger.info(msg)
 logger.warn(msg)
 logger.error(msg,optionalMeta)
-logger.footprint(msg,optionalMeta)
+logger.backup(msg,optionalMeta)
 logger.alert(msg,optionalMeta)
 logger.panic(msg,optionalMeta)
 
@@ -146,7 +146,7 @@ logger.mdcSegment.put(morePersistentContext); // ... but only for current segmen
 
 logger.panic('some message', someoOptionalMeta)
 logger.alert('some message', someoOptionalMeta)
-logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
+logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
 
 // maybe in another file
 logger.mdc.put(morePersistentContext) // visible for all logs from now in the timeline
@@ -171,7 +171,7 @@ logger.trace('into test 1');
 logger.info('into test 1');
 logger.warn('warning message');
 logger.error('error message', { error: 'ERROR HERE' });
-logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
+logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
 logger.alert('alert message');
 logger.panic('emerg message');
 
@@ -189,7 +189,7 @@ logger.error('error message');
 logger.alert('alert message');
 logger.panic('emerg message');
 
-logger.footprint('some important checkpoint data', { data: { a: 'qwert' } });
+logger.backup('some important checkpoint data', { data: { a: 'qwert' } });
 
 ```
 

@@ -12,7 +12,7 @@ declare class LogService {
             panic: number;
             alert: number;
             error: number;
-            footprint: number;
+            backup: number;
             warn: number;
             info: number;
             trace: number;
@@ -34,7 +34,7 @@ declare class LogService {
             panic: number;
             alert: number;
             error: number;
-            footprint: number;
+            backup: number;
             warn: number;
             info: number;
             trace: number;

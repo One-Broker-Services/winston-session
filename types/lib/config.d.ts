@@ -3,7 +3,7 @@ export namespace levels {
     const panic: number;
     const alert: number;
     const error: number;
-    const footprint: number;
+    const backup: number;
     const warn: number;
     const info: number;
     const trace: number;
@@ -16,8 +16,8 @@ export namespace colors {
     export { alert_1 as alert };
     const error_1: string;
     export { error_1 as error };
-    const footprint_1: string;
-    export { footprint_1 as footprint };
+    const backup_1: string;
+    export { backup_1 as backup };
     const warn_1: string;
     export { warn_1 as warn };
     const info_1: string;
