@@ -9,8 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Warn: no test specified\" && exit 0",
-    "publish": "np",
-    "prepublish": "npm run tsc",
+    "publish:scape": "np",
     "publish:local": "local-package-publisher -p",
     "unpublish:local": "local-package-publisher -u"
   },
