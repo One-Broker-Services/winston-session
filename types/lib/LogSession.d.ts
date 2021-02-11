@@ -10,7 +10,7 @@ declare class LogSession {
     _group: string;
     _label: string;
     _level: string;
-    _context: ContextManager;
+    _mdc: MDCManager;
     _service: ServiceManager;
     _contextLevel: string
     _logger: winston.Logger;
@@ -32,5 +32,5 @@ declare class LogSession {
     footprint(msg: string, meta: object): void;
 }
 import winston = require("winston");
-import ContextManager = require("./LogContextManager");
+import MDCManager = require("./MDCManager");
 import ServiceManager = require("./LogServiceManager");

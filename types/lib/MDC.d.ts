@@ -1,7 +1,7 @@
-export = LogContext;
-declare class LogContext {
+export = MDC;
+declare class MDC {
     static instance(): any;
-    static reset(): void;
+    static clear(): void;
     global: {
         _globalContextId: string;
     };
