@@ -30,6 +30,7 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "dependencies": {
+    "update-notifier": "^5.1.0",
     "uuid": "^8.3.2",
     "winston": "^3.3.3"
   }
