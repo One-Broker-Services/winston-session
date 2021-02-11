@@ -17,9 +17,9 @@ declare class LogSession {
     _service: ServiceManager;
     _logger: winston.Logger;
     get mdc(): {
-        segment: () => {
-            put: (ctx: any) => void;
-        };
+        put: (ctx: any) => void;
+    };
+    get mdcSegment(): {
         put: (ctx: any) => void;
     };
     getLogger(): winston.Logger;
@@ -27,8 +27,6 @@ declare class LogSession {
     endSegment(): void;
     startGroup(group: string): LogSession;
     endGroup(): LogSession;
-    addContextSegment(ctx: object): void;
-    addContext(ctx: object): void;
     log(action: string, msg: string, data: object): void;
     debug(msg: string, meta: object): void;
     trace(msg: string, meta: object): void;
